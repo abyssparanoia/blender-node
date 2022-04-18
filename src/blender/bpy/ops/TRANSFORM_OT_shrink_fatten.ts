@@ -5,14 +5,13 @@ import { PythonInterop } from '../../../python/interop'
 
 /**
  * TRANSFORM_OT_shrink_fatten
- * 
- * 
+ *
+ *
  */
 export class TRANSFORM_OT_shrink_fatten {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

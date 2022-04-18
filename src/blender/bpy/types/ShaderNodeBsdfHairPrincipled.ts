@@ -9,30 +9,29 @@ import { ShaderNode } from './ShaderNode'
 
 /**
  * ShaderNodeBsdfHairPrincipled
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.ShaderNodeBsdfHairPrincipled.html
  */
 export class ShaderNodeBsdfHairPrincipled {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Select the shader’s color parametrization
+   * @desc enum in ['ABSORPTION', 'MELANIN', 'COLOR'], default 'COLOR'
+   */
+  public get parametrization(): 'ABSORPTION' | 'MELANIN' | 'COLOR' {
+    return PythonInterop.getEnum(this.interop, `${this.accessor}.parametrization`)
+  }
 
-    /**
-     * Select the shader’s color parametrization
-     * @desc enum in ['ABSORPTION', 'MELANIN', 'COLOR'], default 'COLOR'
-     */
-    public get parametrization(): 'ABSORPTION' | 'MELANIN' | 'COLOR' {
-        return PythonInterop.getEnum(this.interop, `${this.accessor}.parametrization`)
-    }
+  /**
+   * Select the shader’s color parametrization
+   * @desc enum in ['ABSORPTION', 'MELANIN', 'COLOR'], default 'COLOR'
+   */
+  public set parametrization(value: 'ABSORPTION' | 'MELANIN' | 'COLOR') {
+    PythonInterop.setEnum(this.interop, `${this.accessor}.parametrization`, value)
+  }
 
-    /**
-     * Select the shader’s color parametrization
-     * @desc enum in ['ABSORPTION', 'MELANIN', 'COLOR'], default 'COLOR'
-     */
-    public set parametrization(value: 'ABSORPTION' | 'MELANIN' | 'COLOR') {
-        PythonInterop.setEnum(this.interop, `${this.accessor}.parametrization`, value)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

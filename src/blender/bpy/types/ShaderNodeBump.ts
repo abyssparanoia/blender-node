@@ -9,30 +9,29 @@ import { ShaderNode } from './ShaderNode'
 
 /**
  * ShaderNodeBump
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.ShaderNodeBump.html
  */
 export class ShaderNodeBump {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Invert the bump mapping direction to push into the surface instead of out
+   * @desc boolean, default False
+   */
+  public get invert(): boolean {
+    return PythonInterop.getBoolean(this.interop, `${this.accessor}.invert`)
+  }
 
-    /**
-     * Invert the bump mapping direction to push into the surface instead of out
-     * @desc boolean, default False
-     */
-    public get invert(): boolean {
-        return PythonInterop.getBoolean(this.interop, `${this.accessor}.invert`)
-    }
+  /**
+   * Invert the bump mapping direction to push into the surface instead of out
+   * @desc boolean, default False
+   */
+  public set invert(value: boolean) {
+    PythonInterop.setBoolean(this.interop, `${this.accessor}.invert`, value)
+  }
 
-    /**
-     * Invert the bump mapping direction to push into the surface instead of out
-     * @desc boolean, default False
-     */
-    public set invert(value: boolean) {
-        PythonInterop.setBoolean(this.interop, `${this.accessor}.invert`, value)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

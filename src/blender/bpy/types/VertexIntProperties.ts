@@ -6,22 +6,21 @@ import { MeshVertexIntPropertyLayer } from './MeshVertexIntPropertyLayer'
 
 /**
  * VertexIntProperties
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.VertexIntProperties.html
  */
 export class VertexIntProperties {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Add a integer property layer to Mesh
+   * @desc MeshVertexIntPropertyLayer
+   */
+  public new(options: { name?: string }): MeshVertexIntPropertyLayer {
+    return PythonInterop.callClass(this.interop, `${this.accessor}.new`, options, MeshVertexIntPropertyLayer)
+  }
 
-    /**
-     * Add a integer property layer to Mesh
-     * @desc MeshVertexIntPropertyLayer
-     */
-    public new(options: { name?: string }): MeshVertexIntPropertyLayer {
-        return PythonInterop.callClass(this.interop, `${this.accessor}.new`, options, MeshVertexIntPropertyLayer)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

@@ -9,14 +9,13 @@ import { ShaderNode } from './ShaderNode'
 
 /**
  * ShaderNodeShaderToRGB
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.ShaderNodeShaderToRGB.html
  */
 export class ShaderNodeShaderToRGB {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

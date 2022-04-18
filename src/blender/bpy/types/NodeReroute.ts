@@ -8,14 +8,13 @@ import { NodeInternal } from './NodeInternal'
 
 /**
  * NodeReroute
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.NodeReroute.html
  */
 export class NodeReroute {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

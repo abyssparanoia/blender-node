@@ -10,22 +10,21 @@ import { ColorRamp } from './ColorRamp'
 
 /**
  * ShaderNodeValToRGB
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.ShaderNodeValToRGB.html
  */
 export class ShaderNodeValToRGB {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc ColorRamp, (readonly)
+   */
+  public get color_ramp(): ColorRamp {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.color_ramp`, ColorRamp)
+  }
 
-    /**
-     * 
-     * @desc ColorRamp, (readonly)
-     */
-    public get color_ramp(): ColorRamp {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.color_ramp`, ColorRamp)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

@@ -5,14 +5,13 @@ import { PythonInterop } from '../../../python/interop'
 
 /**
  * PathCompareCollection
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.PathCompareCollection.html
  */
 export class PathCompareCollection {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

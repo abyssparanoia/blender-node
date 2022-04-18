@@ -5,14 +5,13 @@ import { PythonInterop } from '../../../python/interop'
 
 /**
  * PAINTCURVE_OT_add_point
- * 
- * 
+ *
+ *
  */
 export class PAINTCURVE_OT_add_point {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

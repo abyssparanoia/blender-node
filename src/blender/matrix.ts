@@ -1,1 +1,1 @@
-export class Matrix { }
+export class Matrix {}

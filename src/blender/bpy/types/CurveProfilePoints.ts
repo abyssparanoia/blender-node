@@ -6,30 +6,29 @@ import { CurveProfilePoint } from './CurveProfilePoint'
 
 /**
  * CurveProfilePoints
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.CurveProfilePoints.html
  */
 export class CurveProfilePoints {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Add point to the profile
+   * @desc CurveProfilePoint
+   */
+  public add(options: { x?: number; y?: number }): CurveProfilePoint {
+    return PythonInterop.callClass(this.interop, `${this.accessor}.add`, options, CurveProfilePoint)
+  }
 
-    /**
-     * Add point to the profile
-     * @desc CurveProfilePoint
-     */
-    public add(options: { x?: number, y?: number }): CurveProfilePoint {
-        return PythonInterop.callClass(this.interop, `${this.accessor}.add`, options, CurveProfilePoint)
-    }
+  /**
+   * Delete point from the profile
+   * @desc void
+   */
+  public remove(options: { point?: unknown }): void {
+    return PythonInterop.callVoid(this.interop, `${this.accessor}.remove`, options)
+  }
 
-    /**
-     * Delete point from the profile
-     * @desc void
-     */
-    public remove(options: { point?: unknown }): void {
-        return PythonInterop.callVoid(this.interop, `${this.accessor}.remove`, options)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

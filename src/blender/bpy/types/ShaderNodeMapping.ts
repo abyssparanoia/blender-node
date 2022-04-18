@@ -9,30 +9,29 @@ import { ShaderNode } from './ShaderNode'
 
 /**
  * ShaderNodeMapping
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.ShaderNodeMapping.html
  */
 export class ShaderNodeMapping {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Type of vector that the mapping transforms
+   * @desc enum in ['POINT', 'TEXTURE', 'VECTOR', 'NORMAL'], default 'POINT'
+   */
+  public get vector_type(): 'POINT' | 'TEXTURE' | 'VECTOR' | 'NORMAL' {
+    return PythonInterop.getEnum(this.interop, `${this.accessor}.vector_type`)
+  }
 
-    /**
-     * Type of vector that the mapping transforms
-     * @desc enum in ['POINT', 'TEXTURE', 'VECTOR', 'NORMAL'], default 'POINT'
-     */
-    public get vector_type(): 'POINT' | 'TEXTURE' | 'VECTOR' | 'NORMAL' {
-        return PythonInterop.getEnum(this.interop, `${this.accessor}.vector_type`)
-    }
+  /**
+   * Type of vector that the mapping transforms
+   * @desc enum in ['POINT', 'TEXTURE', 'VECTOR', 'NORMAL'], default 'POINT'
+   */
+  public set vector_type(value: 'POINT' | 'TEXTURE' | 'VECTOR' | 'NORMAL') {
+    PythonInterop.setEnum(this.interop, `${this.accessor}.vector_type`, value)
+  }
 
-    /**
-     * Type of vector that the mapping transforms
-     * @desc enum in ['POINT', 'TEXTURE', 'VECTOR', 'NORMAL'], default 'POINT'
-     */
-    public set vector_type(value: 'POINT' | 'TEXTURE' | 'VECTOR' | 'NORMAL') {
-        PythonInterop.setEnum(this.interop, `${this.accessor}.vector_type`, value)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

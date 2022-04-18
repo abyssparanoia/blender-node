@@ -8,22 +8,21 @@ import { CurveMapping } from './CurveMapping'
 
 /**
  * HueCorrectModifier
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.HueCorrectModifier.html
  */
 export class HueCorrectModifier {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc CurveMapping, (readonly)
+   */
+  public get curve_mapping(): CurveMapping {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.curve_mapping`, CurveMapping)
+  }
 
-    /**
-     * 
-     * @desc CurveMapping, (readonly)
-     */
-    public get curve_mapping(): CurveMapping {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.curve_mapping`, CurveMapping)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

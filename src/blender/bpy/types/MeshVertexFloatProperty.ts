@@ -5,30 +5,29 @@ import { PythonInterop } from '../../../python/interop'
 
 /**
  * MeshVertexFloatProperty
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.MeshVertexFloatProperty.html
  */
 export class MeshVertexFloatProperty {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc float in [-inf, inf], default 0.0
+   */
+  public get value(): number {
+    return PythonInterop.getFloat(this.interop, `${this.accessor}.value`)
+  }
 
-    /**
-     * 
-     * @desc float in [-inf, inf], default 0.0
-     */
-    public get value(): number {
-        return PythonInterop.getFloat(this.interop, `${this.accessor}.value`)
-    }
+  /**
+   *
+   * @desc float in [-inf, inf], default 0.0
+   */
+  public set value(value: number) {
+    PythonInterop.setFloat(this.interop, `${this.accessor}.value`, value)
+  }
 
-    /**
-     * 
-     * @desc float in [-inf, inf], default 0.0
-     */
-    public set value(value: number) {
-        PythonInterop.setFloat(this.interop, `${this.accessor}.value`, value)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

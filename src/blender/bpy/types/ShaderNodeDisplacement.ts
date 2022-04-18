@@ -9,30 +9,29 @@ import { ShaderNode } from './ShaderNode'
 
 /**
  * ShaderNodeDisplacement
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.ShaderNodeDisplacement.html
  */
 export class ShaderNodeDisplacement {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Space of the input height
+   * @desc enum in ['OBJECT', 'WORLD'], default 'OBJECT'
+   */
+  public get space(): 'OBJECT' | 'WORLD' {
+    return PythonInterop.getEnum(this.interop, `${this.accessor}.space`)
+  }
 
-    /**
-     * Space of the input height
-     * @desc enum in ['OBJECT', 'WORLD'], default 'OBJECT'
-     */
-    public get space(): 'OBJECT' | 'WORLD' {
-        return PythonInterop.getEnum(this.interop, `${this.accessor}.space`)
-    }
+  /**
+   * Space of the input height
+   * @desc enum in ['OBJECT', 'WORLD'], default 'OBJECT'
+   */
+  public set space(value: 'OBJECT' | 'WORLD') {
+    PythonInterop.setEnum(this.interop, `${this.accessor}.space`, value)
+  }
 
-    /**
-     * Space of the input height
-     * @desc enum in ['OBJECT', 'WORLD'], default 'OBJECT'
-     */
-    public set space(value: 'OBJECT' | 'WORLD') {
-        PythonInterop.setEnum(this.interop, `${this.accessor}.space`, value)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

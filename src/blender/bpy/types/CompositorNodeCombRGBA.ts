@@ -9,22 +9,21 @@ import { CompositorNode } from './CompositorNode'
 
 /**
  * CompositorNodeCombRGBA
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.CompositorNodeCombRGBA.html
  */
 export class CompositorNodeCombRGBA {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc void
+   */
+  public update(): void {
+    return PythonInterop.callVoid(this.interop, `${this.accessor}.update`, {})
+  }
 
-    /**
-     * 
-     * @desc void
-     */
-    public update(): void {
-        return PythonInterop.callVoid(this.interop, `${this.accessor}.update`, {})
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

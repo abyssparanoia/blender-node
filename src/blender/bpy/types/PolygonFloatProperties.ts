@@ -6,22 +6,21 @@ import { MeshPolygonFloatPropertyLayer } from './MeshPolygonFloatPropertyLayer'
 
 /**
  * PolygonFloatProperties
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.PolygonFloatProperties.html
  */
 export class PolygonFloatProperties {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Add a float property layer to Mesh
+   * @desc MeshPolygonFloatPropertyLayer
+   */
+  public new(options: { name?: string }): MeshPolygonFloatPropertyLayer {
+    return PythonInterop.callClass(this.interop, `${this.accessor}.new`, options, MeshPolygonFloatPropertyLayer)
+  }
 
-    /**
-     * Add a float property layer to Mesh
-     * @desc MeshPolygonFloatPropertyLayer
-     */
-    public new(options: { name?: string }): MeshPolygonFloatPropertyLayer {
-        return PythonInterop.callClass(this.interop, `${this.accessor}.new`, options, MeshPolygonFloatPropertyLayer)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

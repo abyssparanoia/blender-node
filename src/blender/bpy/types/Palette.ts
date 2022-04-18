@@ -9,22 +9,21 @@ import { PaletteColor } from './PaletteColor'
 
 /**
  * Palette
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.Palette.html
  */
 export class Palette {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc PaletteColors bpy_prop_collection of PaletteColor, (readonly)
+   */
+  public get colors(): BlenderCollection<PaletteColor> & Indexable<PaletteColor> & PaletteColors {
+    return BlenderCollection.createSpecialized(this.interop, `${this.accessor}.colors`, PaletteColors, PaletteColor)
+  }
 
-    /**
-     * 
-     * @desc PaletteColors bpy_prop_collection of PaletteColor, (readonly)
-     */
-    public get colors(): BlenderCollection<PaletteColor> & Indexable<PaletteColor> & PaletteColors {
-        return BlenderCollection.createSpecialized(this.interop, `${this.accessor}.colors`, PaletteColors, PaletteColor)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

@@ -9,30 +9,29 @@ import { TextureNode } from './TextureNode'
 
 /**
  * TextureNodeOutput
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.TextureNodeOutput.html
  */
 export class TextureNodeOutput {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc string, default '', (never None)
+   */
+  public get filepath(): string {
+    return PythonInterop.getString(this.interop, `${this.accessor}.filepath`)
+  }
 
-    /**
-     * 
-     * @desc string, default '', (never None)
-     */
-    public get filepath(): string {
-        return PythonInterop.getString(this.interop, `${this.accessor}.filepath`)
-    }
+  /**
+   *
+   * @desc string, default '', (never None)
+   */
+  public set filepath(value: string) {
+    PythonInterop.setString(this.interop, `${this.accessor}.filepath`, value)
+  }
 
-    /**
-     * 
-     * @desc string, default '', (never None)
-     */
-    public set filepath(value: string) {
-        PythonInterop.setString(this.interop, `${this.accessor}.filepath`, value)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

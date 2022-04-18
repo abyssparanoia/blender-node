@@ -5,14 +5,13 @@ import { PythonInterop } from '../../../python/interop'
 
 /**
  * CURVE_OT_extrude
- * 
- * 
+ *
+ *
  */
 export class CURVE_OT_extrude {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

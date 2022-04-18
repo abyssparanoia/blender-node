@@ -9,14 +9,13 @@ import { ShaderNode } from './ShaderNode'
 
 /**
  * ShaderNodeVolumeScatter
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.ShaderNodeVolumeScatter.html
  */
 export class ShaderNodeVolumeScatter {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

@@ -7,22 +7,21 @@ import { UIList } from './UIList'
 
 /**
  * NODE_UL_interface_sockets
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.NODE_UL_interface_sockets.html
  */
 export class NODE_UL_interface_sockets {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc void
+   */
+  public draw_item(): void {
+    return PythonInterop.callVoid(this.interop, `${this.accessor}.draw_item`, {})
+  }
 
-    /**
-     * 
-     * @desc void
-     */
-    public draw_item(): void {
-        return PythonInterop.callVoid(this.interop, `${this.accessor}.draw_item`, {})
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

@@ -13,94 +13,93 @@ import { NodeTree } from './NodeTree'
 
 /**
  * World
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.World.html
  */
 export class World {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Animation data for this data-block
+   * @desc AnimData, (readonly)
+   */
+  public get animation_data(): AnimData {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.animation_data`, AnimData)
+  }
 
-    /**
-     * Animation data for this data-block
-     * @desc AnimData, (readonly)
-     */
-    public get animation_data(): AnimData {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.animation_data`, AnimData)
-    }
+  /**
+   * Cycles world settings
+   * @desc CyclesWorldSettings, (readonly)
+   */
+  public get cycles(): CyclesWorldSettings {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.cycles`, CyclesWorldSettings)
+  }
 
-    /**
-     * Cycles world settings
-     * @desc CyclesWorldSettings, (readonly)
-     */
-    public get cycles(): CyclesWorldSettings {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.cycles`, CyclesWorldSettings)
-    }
+  /**
+   * Cycles visibility settings
+   * @desc CyclesVisibilitySettings, (readonly)
+   */
+  public get cycles_visibility(): CyclesVisibilitySettings {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.cycles_visibility`, CyclesVisibilitySettings)
+  }
 
-    /**
-     * Cycles visibility settings
-     * @desc CyclesVisibilitySettings, (readonly)
-     */
-    public get cycles_visibility(): CyclesVisibilitySettings {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.cycles_visibility`, CyclesVisibilitySettings)
-    }
+  /**
+   * World lighting settings
+   * @desc WorldLighting, (readonly, never None)
+   */
+  public get light_settings(): WorldLighting {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.light_settings`, WorldLighting)
+  }
 
-    /**
-     * World lighting settings
-     * @desc WorldLighting, (readonly, never None)
-     */
-    public get light_settings(): WorldLighting {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.light_settings`, WorldLighting)
-    }
+  /**
+   * World mist settings
+   * @desc WorldMistSettings, (readonly, never None)
+   */
+  public get mist_settings(): WorldMistSettings {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.mist_settings`, WorldMistSettings)
+  }
 
-    /**
-     * World mist settings
-     * @desc WorldMistSettings, (readonly, never None)
-     */
-    public get mist_settings(): WorldMistSettings {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.mist_settings`, WorldMistSettings)
-    }
+  /**
+   * Node tree for node based worlds
+   * @desc NodeTree, (readonly)
+   */
+  public get node_tree(): NodeTree {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.node_tree`, NodeTree)
+  }
 
-    /**
-     * Node tree for node based worlds
-     * @desc NodeTree, (readonly)
-     */
-    public get node_tree(): NodeTree {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.node_tree`, NodeTree)
-    }
+  /**
+   * Color of the background
+   * @desc float array of 3 items in [0, inf], default (0.05, 0.05, 0.05)
+   */
+  public get color(): [number, number, number] {
+    return PythonInterop.getArray(this.interop, `${this.accessor}.color`, 'number', 3)
+  }
 
-    /**
-     * Color of the background
-     * @desc float array of 3 items in [0, inf], default (0.05, 0.05, 0.05)
-     */
-    public get color(): [number, number, number] {
-        return PythonInterop.getArray(this.interop, `${this.accessor}.color`, 'number', 3)
-    }
+  /**
+   * Use shader nodes to render the world
+   * @desc boolean, default False
+   */
+  public get use_nodes(): boolean {
+    return PythonInterop.getBoolean(this.interop, `${this.accessor}.use_nodes`)
+  }
 
-    /**
-     * Use shader nodes to render the world
-     * @desc boolean, default False
-     */
-    public get use_nodes(): boolean {
-        return PythonInterop.getBoolean(this.interop, `${this.accessor}.use_nodes`)
-    }
+  /**
+   * Color of the background
+   * @desc float array of 3 items in [0, inf], default (0.05, 0.05, 0.05)
+   */
+  public set color(value: [number, number, number]) {
+    PythonInterop.setArray(this.interop, `${this.accessor}.color`, value)
+  }
 
-    /**
-     * Color of the background
-     * @desc float array of 3 items in [0, inf], default (0.05, 0.05, 0.05)
-     */
-    public set color(value: [number, number, number]) {
-        PythonInterop.setArray(this.interop, `${this.accessor}.color`, value)
-    }
+  /**
+   * Use shader nodes to render the world
+   * @desc boolean, default False
+   */
+  public set use_nodes(value: boolean) {
+    PythonInterop.setBoolean(this.interop, `${this.accessor}.use_nodes`, value)
+  }
 
-    /**
-     * Use shader nodes to render the world
-     * @desc boolean, default False
-     */
-    public set use_nodes(value: boolean) {
-        PythonInterop.setBoolean(this.interop, `${this.accessor}.use_nodes`, value)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

@@ -9,14 +9,13 @@ import { TextureNode } from './TextureNode'
 
 /**
  * TextureNodeHueSaturation
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.TextureNodeHueSaturation.html
  */
 export class TextureNodeHueSaturation {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

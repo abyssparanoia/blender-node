@@ -8,14 +8,13 @@ import { NodeInternal } from './NodeInternal'
 
 /**
  * ShaderNode
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.ShaderNode.html
  */
 export class ShaderNode {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

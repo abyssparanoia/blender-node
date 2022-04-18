@@ -10,38 +10,37 @@ import { MovieClip } from './MovieClip'
 
 /**
  * CompositorNodeMovieClip
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.CompositorNodeMovieClip.html
  */
 export class CompositorNodeMovieClip {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc MovieClip
+   */
+  public get clip(): MovieClip {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.clip`, MovieClip)
+  }
 
-    /**
-     * 
-     * @desc MovieClip
-     */
-    public get clip(): MovieClip {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.clip`, MovieClip)
-    }
+  /**
+   *
+   * @desc MovieClip
+   */
+  public set clip(value: MovieClip) {
+    PythonInterop.setClass(this.interop, `${this.accessor}.clip`, value)
+  }
 
-    /**
-     * 
-     * @desc MovieClip
-     */
-    public set clip(value: MovieClip) {
-        PythonInterop.setClass(this.interop, `${this.accessor}.clip`, value)
-    }
+  /**
+   *
+   * @desc void
+   */
+  public update(): void {
+    return PythonInterop.callVoid(this.interop, `${this.accessor}.update`, {})
+  }
 
-    /**
-     * 
-     * @desc void
-     */
-    public update(): void {
-        return PythonInterop.callVoid(this.interop, `${this.accessor}.update`, {})
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

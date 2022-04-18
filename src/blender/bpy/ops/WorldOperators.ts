@@ -5,22 +5,21 @@ import { PythonInterop } from '../../../python/interop'
 
 /**
  * WorldOperators
- * 
+ *
  * https://docs.blender.org/api/current/bpy.ops.world.html
  */
 export class WorldOperators {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Create a new world Data-Block
+   * @desc void
+   */
+  public new(): void {
+    return PythonInterop.callVoid(this.interop, `${this.accessor}.new`, {})
+  }
 
-    /**
-     * Create a new world Data-Block
-     * @desc void
-     */
-    public new(): void {
-        return PythonInterop.callVoid(this.interop, `${this.accessor}.new`, {})
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

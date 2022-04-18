@@ -5,14 +5,13 @@ import { PythonInterop } from '../../../python/interop'
 
 /**
  * MASK_OT_add_feather_vertex
- * 
- * 
+ *
+ *
  */
 export class MASK_OT_add_feather_vertex {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

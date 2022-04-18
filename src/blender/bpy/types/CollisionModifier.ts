@@ -8,22 +8,21 @@ import { CollisionSettings } from './CollisionSettings'
 
 /**
  * CollisionModifier
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.CollisionModifier.html
  */
 export class CollisionModifier {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc CollisionSettings, (readonly, never None)
+   */
+  public get settings(): CollisionSettings {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.settings`, CollisionSettings)
+  }
 
-    /**
-     * 
-     * @desc CollisionSettings, (readonly, never None)
-     */
-    public get settings(): CollisionSettings {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.settings`, CollisionSettings)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

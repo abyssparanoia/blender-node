@@ -6,22 +6,21 @@ import { Struct } from './Struct'
 
 /**
  * BlenderRNA
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.BlenderRNA.html
  */
 export class BlenderRNA {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc bpy_prop_collection of Struct, (readonly)
+   */
+  public get structs(): BlenderCollection<Struct> & Indexable<Struct> {
+    return BlenderCollection.createGeneric(this.interop, `${this.accessor}.structs`, Struct)
+  }
 
-    /**
-     * 
-     * @desc bpy_prop_collection of Struct, (readonly)
-     */
-    public get structs(): BlenderCollection<Struct> & Indexable<Struct> {
-        return BlenderCollection.createGeneric(this.interop, `${this.accessor}.structs`, Struct)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

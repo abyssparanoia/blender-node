@@ -7,14 +7,13 @@ import { UIList } from './UIList'
 
 /**
  * UI_UL_list
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.UI_UL_list.html
  */
 export class UI_UL_list {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

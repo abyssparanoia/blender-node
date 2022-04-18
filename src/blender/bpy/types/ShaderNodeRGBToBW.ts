@@ -9,14 +9,13 @@ import { ShaderNode } from './ShaderNode'
 
 /**
  * ShaderNodeRGBToBW
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.ShaderNodeRGBToBW.html
  */
 export class ShaderNodeRGBToBW {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

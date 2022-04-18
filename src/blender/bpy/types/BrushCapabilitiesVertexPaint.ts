@@ -5,22 +5,21 @@ import { PythonInterop } from '../../../python/interop'
 
 /**
  * BrushCapabilitiesVertexPaint
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.BrushCapabilitiesVertexPaint.html
  */
 export class BrushCapabilitiesVertexPaint {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc boolean, default False, (readonly)
+   */
+  public get has_color(): boolean {
+    return PythonInterop.getBoolean(this.interop, `${this.accessor}.has_color`)
+  }
 
-    /**
-     * 
-     * @desc boolean, default False, (readonly)
-     */
-    public get has_color(): boolean {
-        return PythonInterop.getBoolean(this.interop, `${this.accessor}.has_color`)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

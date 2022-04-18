@@ -9,30 +9,29 @@ import { ShaderNode } from './ShaderNode'
 
 /**
  * ShaderNodeBevel
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.ShaderNodeBevel.html
  */
 export class ShaderNodeBevel {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Number of rays to trace per shader evaluation
+   * @desc int in [2, 16], default 0
+   */
+  public get samples(): number {
+    return PythonInterop.getInteger(this.interop, `${this.accessor}.samples`)
+  }
 
-    /**
-     * Number of rays to trace per shader evaluation
-     * @desc int in [2, 16], default 0
-     */
-    public get samples(): number {
-        return PythonInterop.getInteger(this.interop, `${this.accessor}.samples`)
-    }
+  /**
+   * Number of rays to trace per shader evaluation
+   * @desc int in [2, 16], default 0
+   */
+  public set samples(value: number) {
+    PythonInterop.setInteger(this.interop, `${this.accessor}.samples`, value)
+  }
 
-    /**
-     * Number of rays to trace per shader evaluation
-     * @desc int in [2, 16], default 0
-     */
-    public set samples(value: number) {
-        PythonInterop.setInteger(this.interop, `${this.accessor}.samples`, value)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

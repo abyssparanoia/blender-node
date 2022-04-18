@@ -27,8 +27,8 @@ THE SOFTWARE.
 ---------------------------------------------------------------------------*/
 
 import { parentPort, workerData } from 'worker_threads'
-import { Protocol }               from './protocol'
-import { BlenderProcess }         from './process'
+import { Protocol } from './protocol'
+import { BlenderProcess } from './process'
 
 // ----------------------------------------
 // Host Process
@@ -41,36 +41,36 @@ const blender = new BlenderProcess()
 // ----------------------------------------
 
 const barrier = workerData.barrier as Int32Array
-const length  = workerData.length  as Uint32Array
+const length = workerData.length as Uint32Array
 const success = workerData.success as Uint8Array
-const buffer  = workerData.buffer  as Uint8Array
+const buffer = workerData.buffer as Uint8Array
 
 // ----------------------------------------
 // messaging
 // ----------------------------------------
 
 parentPort!.on('message', async (protocol: Protocol) => {
-    switch (protocol.type) {
-        case 'execute': {
-            try {
-                const result = await blender.execute(protocol.input)
-                const output = Buffer.from(result)
-                success.set([1], 0)
-                length.set([output.length], 0)
-                buffer.set(output)
-            } catch (error) {
-                const output = Buffer.from(error)
-                success.set([0], 0)
-                length.set([output.length], 0)
-                buffer.set(output)
-            }
-            Atomics.store(barrier, 0, 1)
-            Atomics.notify(barrier!, 0, 1)
-            break
-        }
-        case 'dispose': {
-            blender.dispose()
-            process.exit(1)
-        }
+  switch (protocol.type) {
+    case 'execute': {
+      try {
+        const result = await blender.execute(protocol.input)
+        const output = Buffer.from(result)
+        success.set([1], 0)
+        length.set([output.length], 0)
+        buffer.set(output)
+      } catch (error) {
+        const output = Buffer.from(error)
+        success.set([0], 0)
+        length.set([output.length], 0)
+        buffer.set(output)
+      }
+      Atomics.store(barrier, 0, 1)
+      Atomics.notify(barrier!, 0, 1)
+      break
     }
+    case 'dispose': {
+      blender.dispose()
+      process.exit(1)
+    }
+  }
 })

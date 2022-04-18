@@ -11,38 +11,37 @@ import { Image } from './Image'
 
 /**
  * TextureNodeImage
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.TextureNodeImage.html
  */
 export class TextureNodeImage {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Parameters defining the image duration, offset and related settings
+   * @desc ImageUser, (readonly)
+   */
+  public get image_user(): ImageUser {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.image_user`, ImageUser)
+  }
 
-    /**
-     * Parameters defining the image duration, offset and related settings
-     * @desc ImageUser, (readonly)
-     */
-    public get image_user(): ImageUser {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.image_user`, ImageUser)
-    }
+  /**
+   *
+   * @desc Image
+   */
+  public get image(): Image {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.image`, Image)
+  }
 
-    /**
-     * 
-     * @desc Image
-     */
-    public get image(): Image {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.image`, Image)
-    }
+  /**
+   *
+   * @desc Image
+   */
+  public set image(value: Image) {
+    PythonInterop.setClass(this.interop, `${this.accessor}.image`, value)
+  }
 
-    /**
-     * 
-     * @desc Image
-     */
-    public set image(value: Image) {
-        PythonInterop.setClass(this.interop, `${this.accessor}.image`, value)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

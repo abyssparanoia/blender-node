@@ -10,30 +10,29 @@ import { ColorRamp } from './ColorRamp'
 
 /**
  * CompositorNodeValToRGB
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.CompositorNodeValToRGB.html
  */
 export class CompositorNodeValToRGB {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc ColorRamp, (readonly)
+   */
+  public get color_ramp(): ColorRamp {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.color_ramp`, ColorRamp)
+  }
 
-    /**
-     * 
-     * @desc ColorRamp, (readonly)
-     */
-    public get color_ramp(): ColorRamp {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.color_ramp`, ColorRamp)
-    }
+  /**
+   *
+   * @desc void
+   */
+  public update(): void {
+    return PythonInterop.callVoid(this.interop, `${this.accessor}.update`, {})
+  }
 
-    /**
-     * 
-     * @desc void
-     */
-    public update(): void {
-        return PythonInterop.callVoid(this.interop, `${this.accessor}.update`, {})
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

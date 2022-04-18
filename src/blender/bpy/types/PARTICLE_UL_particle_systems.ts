@@ -7,22 +7,21 @@ import { UIList } from './UIList'
 
 /**
  * PARTICLE_UL_particle_systems
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.PARTICLE_UL_particle_systems.html
  */
 export class PARTICLE_UL_particle_systems {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc void
+   */
+  public draw_item(): void {
+    return PythonInterop.callVoid(this.interop, `${this.accessor}.draw_item`, {})
+  }
 
-    /**
-     * 
-     * @desc void
-     */
-    public draw_item(): void {
-        return PythonInterop.callVoid(this.interop, `${this.accessor}.draw_item`, {})
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

@@ -8,14 +8,13 @@ import { NodeSocketInterfaceStandard } from './NodeSocketInterfaceStandard'
 
 /**
  * NodeSocketInterfaceShader
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.NodeSocketInterfaceShader.html
  */
 export class NodeSocketInterfaceShader {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

@@ -8,22 +8,21 @@ import { NodeSocketStandard } from './NodeSocketStandard'
 
 /**
  * NodeSocketShader
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.NodeSocketShader.html
  */
 export class NodeSocketShader {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * List of node links from or to this socket. Warning: takes O(len(nodetree.links)) time.(readonly)
+   * @desc void
+   */
+  public get links(): void {
+    return PythonInterop.getVoid(this.interop, `${this.accessor}.links`)
+  }
 
-    /**
-     * List of node links from or to this socket. Warning: takes O(len(nodetree.links)) time.(readonly)
-     * @desc void
-     */
-    public get links(): void {
-        return PythonInterop.getVoid(this.interop, `${this.accessor}.links`)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

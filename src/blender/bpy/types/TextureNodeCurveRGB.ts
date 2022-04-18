@@ -10,22 +10,21 @@ import { CurveMapping } from './CurveMapping'
 
 /**
  * TextureNodeCurveRGB
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.TextureNodeCurveRGB.html
  */
 export class TextureNodeCurveRGB {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc CurveMapping, (readonly)
+   */
+  public get mapping(): CurveMapping {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.mapping`, CurveMapping)
+  }
 
-    /**
-     * 
-     * @desc CurveMapping, (readonly)
-     */
-    public get mapping(): CurveMapping {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.mapping`, CurveMapping)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

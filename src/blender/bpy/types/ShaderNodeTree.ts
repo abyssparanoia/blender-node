@@ -9,22 +9,21 @@ import { ShaderNode } from './ShaderNode'
 
 /**
  * ShaderNodeTree
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.ShaderNodeTree.html
  */
 export class ShaderNodeTree {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Return active shader output node for the specified target
+   * @desc ShaderNode
+   */
+  public get_output_node(options: { target?: 'ALL' | 'EEVEE' | 'CYCLES' }): ShaderNode {
+    return PythonInterop.callClass(this.interop, `${this.accessor}.get_output_node`, options, ShaderNode)
+  }
 
-    /**
-     * Return active shader output node for the specified target
-     * @desc ShaderNode
-     */
-    public get_output_node(options: { target?: 'ALL' | 'EEVEE' | 'CYCLES' }): ShaderNode {
-        return PythonInterop.callClass(this.interop, `${this.accessor}.get_output_node`, options, ShaderNode)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

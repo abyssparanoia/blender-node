@@ -26,40 +26,40 @@ THE SOFTWARE.
 
 ---------------------------------------------------------------------------*/
 
-import { BlenderInterop }     from '../worker/interop'
+import { BlenderInterop } from '../worker/interop'
 import { Context, BlendData } from './bpy/types/index'
-import { Ops }                from './bpy/ops/index'
+import { Ops } from './bpy/ops/index'
 
 export class Blender {
-    private interop: BlenderInterop
+  private interop: BlenderInterop
 
-    constructor() {
-        this.interop = new BlenderInterop()
-        this.interop.execute('import bpy')
-    }
+  constructor() {
+    this.interop = new BlenderInterop()
+    this.interop.execute('import bpy')
+  }
 
-    /** https://docs.blender.org/api/current/bpy.ops.html */
-    public get ops() {
-        return new Ops(this.interop, `bpy.ops`)
-    }
+  /** https://docs.blender.org/api/current/bpy.ops.html */
+  public get ops() {
+    return new Ops(this.interop, `bpy.ops`)
+  }
 
-    /** https://docs.blender.org/api/current/bpy.context.html */
-    public get context() {
-        return new Context(this.interop, `bpy.context`)
-    }
+  /** https://docs.blender.org/api/current/bpy.context.html */
+  public get context() {
+    return new Context(this.interop, `bpy.context`)
+  }
 
-    /** https://docs.blender.org/api/current/bpy.types.BlendData.html */
-    public get data() {
-        return new BlendData(this.interop, `bpy.data`)
-    }
+  /** https://docs.blender.org/api/current/bpy.types.BlendData.html */
+  public get data() {
+    return new BlendData(this.interop, `bpy.data`)
+  }
 
-    /** Executes a single line of the Blender REPL */
-    public execute(command: string): string {
-        return this.interop.execute(command)
-    }
+  /** Executes a single line of the Blender REPL */
+  public execute(command: string): string {
+    return this.interop.execute(command)
+  }
 
-    /** Disposes of this blender instance. */
-    public dispose() {
-        this.interop.dispose()
-    }
+  /** Disposes of this blender instance. */
+  public dispose() {
+    this.interop.dispose()
+  }
 }

@@ -6,38 +6,37 @@ import { GPencilFrame } from './GPencilFrame'
 
 /**
  * GPencilFrames
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.GPencilFrames.html
  */
 export class GPencilFrames {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Add a new grease pencil frame
+   * @desc GPencilFrame
+   */
+  public new(options: { frame_number?: number; active?: boolean }): GPencilFrame {
+    return PythonInterop.callClass(this.interop, `${this.accessor}.new`, options, GPencilFrame)
+  }
 
-    /**
-     * Add a new grease pencil frame
-     * @desc GPencilFrame
-     */
-    public new(options: { frame_number?: number, active?: boolean }): GPencilFrame {
-        return PythonInterop.callClass(this.interop, `${this.accessor}.new`, options, GPencilFrame)
-    }
+  /**
+   * Remove a grease pencil frame
+   * @desc void
+   */
+  public remove(options: { frame?: unknown }): void {
+    return PythonInterop.callVoid(this.interop, `${this.accessor}.remove`, options)
+  }
 
-    /**
-     * Remove a grease pencil frame
-     * @desc void
-     */
-    public remove(options: { frame?: unknown }): void {
-        return PythonInterop.callVoid(this.interop, `${this.accessor}.remove`, options)
-    }
+  /**
+   * Copy a grease pencil frame
+   * @desc GPencilFrame
+   */
+  public copy(options: { source?: unknown }): GPencilFrame {
+    return PythonInterop.callClass(this.interop, `${this.accessor}.copy`, options, GPencilFrame)
+  }
 
-    /**
-     * Copy a grease pencil frame
-     * @desc GPencilFrame
-     */
-    public copy(options: { source?: unknown }): GPencilFrame {
-        return PythonInterop.callClass(this.interop, `${this.accessor}.copy`, options, GPencilFrame)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

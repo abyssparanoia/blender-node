@@ -9,14 +9,13 @@ import { TextureNode } from './TextureNode'
 
 /**
  * TextureNodeDistance
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.TextureNodeDistance.html
  */
 export class TextureNodeDistance {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

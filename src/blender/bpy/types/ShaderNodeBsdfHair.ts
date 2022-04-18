@@ -9,30 +9,29 @@ import { ShaderNode } from './ShaderNode'
 
 /**
  * ShaderNodeBsdfHair
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.ShaderNodeBsdfHair.html
  */
 export class ShaderNodeBsdfHair {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc enum in ['Reflection', 'Transmission'], default 'Reflection'
+   */
+  public get component(): 'Reflection' | 'Transmission' {
+    return PythonInterop.getEnum(this.interop, `${this.accessor}.component`)
+  }
 
-    /**
-     * 
-     * @desc enum in ['Reflection', 'Transmission'], default 'Reflection'
-     */
-    public get component(): 'Reflection' | 'Transmission' {
-        return PythonInterop.getEnum(this.interop, `${this.accessor}.component`)
-    }
+  /**
+   *
+   * @desc enum in ['Reflection', 'Transmission'], default 'Reflection'
+   */
+  public set component(value: 'Reflection' | 'Transmission') {
+    PythonInterop.setEnum(this.interop, `${this.accessor}.component`, value)
+  }
 
-    /**
-     * 
-     * @desc enum in ['Reflection', 'Transmission'], default 'Reflection'
-     */
-    public set component(value: 'Reflection' | 'Transmission') {
-        PythonInterop.setEnum(this.interop, `${this.accessor}.component`, value)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

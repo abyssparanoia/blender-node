@@ -9,22 +9,21 @@ import { PropertyGroup } from './PropertyGroup'
 
 /**
  * NodeGroupInput
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.NodeGroupInput.html
  */
 export class NodeGroupInput {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Interface socket data
+   * @desc PropertyGroup, (readonly)
+   */
+  public get interface(): PropertyGroup {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.interface`, PropertyGroup)
+  }
 
-    /**
-     * Interface socket data
-     * @desc PropertyGroup, (readonly)
-     */
-    public get interface(): PropertyGroup {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.interface`, PropertyGroup)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

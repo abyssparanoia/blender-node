@@ -29,11 +29,10 @@ THE SOFTWARE.
 export type Protocol = Execute | Dispose
 
 export interface Execute {
-    type: 'execute'
-    input: string
+  type: 'execute'
+  input: string
 }
 
 export interface Dispose {
-    type: 'dispose'
+  type: 'dispose'
 }
-

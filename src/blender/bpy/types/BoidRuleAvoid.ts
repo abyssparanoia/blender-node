@@ -8,62 +8,61 @@ import { BlenderObject } from './BlenderObject'
 
 /**
  * BoidRuleAvoid
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.BoidRuleAvoid.html
  */
 export class BoidRuleAvoid {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Avoid object if danger from it is above this threshold
+   * @desc float in [0, 100], default 0.0
+   */
+  public get fear_factor(): number {
+    return PythonInterop.getFloat(this.interop, `${this.accessor}.fear_factor`)
+  }
 
-    /**
-     * Avoid object if danger from it is above this threshold
-     * @desc float in [0, 100], default 0.0
-     */
-    public get fear_factor(): number {
-        return PythonInterop.getFloat(this.interop, `${this.accessor}.fear_factor`)
-    }
+  /**
+   * Object to avoid
+   * @desc Object
+   */
+  public get object(): BlenderObject {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.object`, BlenderObject)
+  }
 
-    /**
-     * Object to avoid
-     * @desc Object
-     */
-    public get object(): BlenderObject {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.object`, BlenderObject)
-    }
+  /**
+   * Predict target movement
+   * @desc boolean, default False
+   */
+  public get use_predict(): boolean {
+    return PythonInterop.getBoolean(this.interop, `${this.accessor}.use_predict`)
+  }
 
-    /**
-     * Predict target movement
-     * @desc boolean, default False
-     */
-    public get use_predict(): boolean {
-        return PythonInterop.getBoolean(this.interop, `${this.accessor}.use_predict`)
-    }
+  /**
+   * Avoid object if danger from it is above this threshold
+   * @desc float in [0, 100], default 0.0
+   */
+  public set fear_factor(value: number) {
+    PythonInterop.setFloat(this.interop, `${this.accessor}.fear_factor`, value)
+  }
 
-    /**
-     * Avoid object if danger from it is above this threshold
-     * @desc float in [0, 100], default 0.0
-     */
-    public set fear_factor(value: number) {
-        PythonInterop.setFloat(this.interop, `${this.accessor}.fear_factor`, value)
-    }
+  /**
+   * Object to avoid
+   * @desc Object
+   */
+  public set object(value: BlenderObject) {
+    PythonInterop.setClass(this.interop, `${this.accessor}.object`, value)
+  }
 
-    /**
-     * Object to avoid
-     * @desc Object
-     */
-    public set object(value: BlenderObject) {
-        PythonInterop.setClass(this.interop, `${this.accessor}.object`, value)
-    }
+  /**
+   * Predict target movement
+   * @desc boolean, default False
+   */
+  public set use_predict(value: boolean) {
+    PythonInterop.setBoolean(this.interop, `${this.accessor}.use_predict`, value)
+  }
 
-    /**
-     * Predict target movement
-     * @desc boolean, default False
-     */
-    public set use_predict(value: boolean) {
-        PythonInterop.setBoolean(this.interop, `${this.accessor}.use_predict`, value)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

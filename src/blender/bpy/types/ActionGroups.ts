@@ -6,30 +6,29 @@ import { ActionGroup } from './ActionGroup'
 
 /**
  * ActionGroups
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.ActionGroups.html
  */
 export class ActionGroups {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Create a new action group and add it to the action
+   * @desc ActionGroup
+   */
+  public new(options: { name?: string }): ActionGroup {
+    return PythonInterop.callClass(this.interop, `${this.accessor}.new`, options, ActionGroup)
+  }
 
-    /**
-     * Create a new action group and add it to the action
-     * @desc ActionGroup
-     */
-    public new(options: { name?: string }): ActionGroup {
-        return PythonInterop.callClass(this.interop, `${this.accessor}.new`, options, ActionGroup)
-    }
+  /**
+   * Remove action group
+   * @desc void
+   */
+  public remove(options: { action_group?: unknown }): void {
+    return PythonInterop.callVoid(this.interop, `${this.accessor}.remove`, options)
+  }
 
-    /**
-     * Remove action group
-     * @desc void
-     */
-    public remove(options: { action_group?: unknown }): void {
-        return PythonInterop.callVoid(this.interop, `${this.accessor}.remove`, options)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

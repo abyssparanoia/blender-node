@@ -6,22 +6,21 @@ import { OperatorProperties } from './OperatorProperties'
 
 /**
  * OperatorMacro
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.OperatorMacro.html
  */
 export class OperatorMacro {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc OperatorProperties, (readonly, never None)
+   */
+  public get properties(): OperatorProperties {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.properties`, OperatorProperties)
+  }
 
-    /**
-     * 
-     * @desc OperatorProperties, (readonly, never None)
-     */
-    public get properties(): OperatorProperties {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.properties`, OperatorProperties)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

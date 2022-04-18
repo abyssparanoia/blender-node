@@ -9,30 +9,29 @@ import { ShaderNode } from './ShaderNode'
 
 /**
  * ShaderNodeSubsurfaceScattering
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.ShaderNodeSubsurfaceScattering.html
  */
 export class ShaderNodeSubsurfaceScattering {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Function to determine how much light nearby points contribute based on their distance to the shading point
+   * @desc enum in ['CUBIC', 'GAUSSIAN', 'BURLEY', 'RANDOM_WALK'], default 'CUBIC'
+   */
+  public get falloff(): 'CUBIC' | 'GAUSSIAN' | 'BURLEY' | 'RANDOM_WALK' {
+    return PythonInterop.getEnum(this.interop, `${this.accessor}.falloff`)
+  }
 
-    /**
-     * Function to determine how much light nearby points contribute based on their distance to the shading point
-     * @desc enum in ['CUBIC', 'GAUSSIAN', 'BURLEY', 'RANDOM_WALK'], default 'CUBIC'
-     */
-    public get falloff(): 'CUBIC' | 'GAUSSIAN' | 'BURLEY' | 'RANDOM_WALK' {
-        return PythonInterop.getEnum(this.interop, `${this.accessor}.falloff`)
-    }
+  /**
+   * Function to determine how much light nearby points contribute based on their distance to the shading point
+   * @desc enum in ['CUBIC', 'GAUSSIAN', 'BURLEY', 'RANDOM_WALK'], default 'CUBIC'
+   */
+  public set falloff(value: 'CUBIC' | 'GAUSSIAN' | 'BURLEY' | 'RANDOM_WALK') {
+    PythonInterop.setEnum(this.interop, `${this.accessor}.falloff`, value)
+  }
 
-    /**
-     * Function to determine how much light nearby points contribute based on their distance to the shading point
-     * @desc enum in ['CUBIC', 'GAUSSIAN', 'BURLEY', 'RANDOM_WALK'], default 'CUBIC'
-     */
-    public set falloff(value: 'CUBIC' | 'GAUSSIAN' | 'BURLEY' | 'RANDOM_WALK') {
-        PythonInterop.setEnum(this.interop, `${this.accessor}.falloff`, value)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

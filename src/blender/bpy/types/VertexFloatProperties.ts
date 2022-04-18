@@ -6,22 +6,21 @@ import { MeshVertexFloatPropertyLayer } from './MeshVertexFloatPropertyLayer'
 
 /**
  * VertexFloatProperties
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.VertexFloatProperties.html
  */
 export class VertexFloatProperties {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Add a float property layer to Mesh
+   * @desc MeshVertexFloatPropertyLayer
+   */
+  public new(options: { name?: string }): MeshVertexFloatPropertyLayer {
+    return PythonInterop.callClass(this.interop, `${this.accessor}.new`, options, MeshVertexFloatPropertyLayer)
+  }
 
-    /**
-     * Add a float property layer to Mesh
-     * @desc MeshVertexFloatPropertyLayer
-     */
-    public new(options: { name?: string }): MeshVertexFloatPropertyLayer {
-        return PythonInterop.callClass(this.interop, `${this.accessor}.new`, options, MeshVertexFloatPropertyLayer)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

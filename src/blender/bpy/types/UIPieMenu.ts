@@ -6,22 +6,21 @@ import { UILayout } from './UILayout'
 
 /**
  * UIPieMenu
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.UIPieMenu.html
  */
 export class UIPieMenu {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc UILayout, (readonly)
+   */
+  public get layout(): UILayout {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.layout`, UILayout)
+  }
 
-    /**
-     * 
-     * @desc UILayout, (readonly)
-     */
-    public get layout(): UILayout {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.layout`, UILayout)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

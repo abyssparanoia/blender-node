@@ -6,30 +6,29 @@ import { CurveMapPoint } from './CurveMapPoint'
 
 /**
  * CurveMapPoints
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.CurveMapPoints.html
  */
 export class CurveMapPoints {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Add point to CurveMap
+   * @desc CurveMapPoint
+   */
+  public new(options: { position?: number; value?: number }): CurveMapPoint {
+    return PythonInterop.callClass(this.interop, `${this.accessor}.new`, options, CurveMapPoint)
+  }
 
-    /**
-     * Add point to CurveMap
-     * @desc CurveMapPoint
-     */
-    public new(options: { position?: number, value?: number }): CurveMapPoint {
-        return PythonInterop.callClass(this.interop, `${this.accessor}.new`, options, CurveMapPoint)
-    }
+  /**
+   * Delete point from CurveMap
+   * @desc void
+   */
+  public remove(options: { point?: unknown }): void {
+    return PythonInterop.callVoid(this.interop, `${this.accessor}.remove`, options)
+  }
 
-    /**
-     * Delete point from CurveMap
-     * @desc void
-     */
-    public remove(options: { point?: unknown }): void {
-        return PythonInterop.callVoid(this.interop, `${this.accessor}.remove`, options)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

@@ -11,38 +11,37 @@ import { NodeTree } from './NodeTree'
 
 /**
  * TextureNodeGroup
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.TextureNodeGroup.html
  */
 export class TextureNodeGroup {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Interface socket data
+   * @desc PropertyGroup, (readonly)
+   */
+  public get interface(): PropertyGroup {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.interface`, PropertyGroup)
+  }
 
-    /**
-     * Interface socket data
-     * @desc PropertyGroup, (readonly)
-     */
-    public get interface(): PropertyGroup {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.interface`, PropertyGroup)
-    }
+  /**
+   *
+   * @desc NodeTree
+   */
+  public get node_tree(): NodeTree {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.node_tree`, NodeTree)
+  }
 
-    /**
-     * 
-     * @desc NodeTree
-     */
-    public get node_tree(): NodeTree {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.node_tree`, NodeTree)
-    }
+  /**
+   *
+   * @desc NodeTree
+   */
+  public set node_tree(value: NodeTree) {
+    PythonInterop.setClass(this.interop, `${this.accessor}.node_tree`, value)
+  }
 
-    /**
-     * 
-     * @desc NodeTree
-     */
-    public set node_tree(value: NodeTree) {
-        PythonInterop.setClass(this.interop, `${this.accessor}.node_tree`, value)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

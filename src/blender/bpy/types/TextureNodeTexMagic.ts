@@ -9,14 +9,13 @@ import { TextureNode } from './TextureNode'
 
 /**
  * TextureNodeTexMagic
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.TextureNodeTexMagic.html
  */
 export class TextureNodeTexMagic {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

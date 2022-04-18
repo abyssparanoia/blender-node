@@ -7,22 +7,21 @@ import { UIList } from './UIList'
 
 /**
  * TEXTURE_UL_texpaintslots
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.TEXTURE_UL_texpaintslots.html
  */
 export class TEXTURE_UL_texpaintslots {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc void
+   */
+  public draw_item(): void {
+    return PythonInterop.callVoid(this.interop, `${this.accessor}.draw_item`, {})
+  }
 
-    /**
-     * 
-     * @desc void
-     */
-    public draw_item(): void {
-        return PythonInterop.callVoid(this.interop, `${this.accessor}.draw_item`, {})
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

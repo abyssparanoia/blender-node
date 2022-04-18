@@ -6,30 +6,29 @@ import { MovieTrackingPlaneTrack } from './MovieTrackingPlaneTrack'
 
 /**
  * MovieTrackingPlaneTracks
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.MovieTrackingPlaneTracks.html
  */
 export class MovieTrackingPlaneTracks {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Active plane track in this tracking data object
+   * @desc MovieTrackingPlaneTrack
+   */
+  public get active(): MovieTrackingPlaneTrack {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.active`, MovieTrackingPlaneTrack)
+  }
 
-    /**
-     * Active plane track in this tracking data object
-     * @desc MovieTrackingPlaneTrack
-     */
-    public get active(): MovieTrackingPlaneTrack {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.active`, MovieTrackingPlaneTrack)
-    }
+  /**
+   * Active plane track in this tracking data object
+   * @desc MovieTrackingPlaneTrack
+   */
+  public set active(value: MovieTrackingPlaneTrack) {
+    PythonInterop.setClass(this.interop, `${this.accessor}.active`, value)
+  }
 
-    /**
-     * Active plane track in this tracking data object
-     * @desc MovieTrackingPlaneTrack
-     */
-    public set active(value: MovieTrackingPlaneTrack) {
-        PythonInterop.setClass(this.interop, `${this.accessor}.active`, value)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

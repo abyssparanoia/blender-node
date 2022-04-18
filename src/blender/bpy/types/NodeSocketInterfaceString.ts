@@ -8,30 +8,29 @@ import { NodeSocketInterfaceStandard } from './NodeSocketInterfaceStandard'
 
 /**
  * NodeSocketInterfaceString
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.NodeSocketInterfaceString.html
  */
 export class NodeSocketInterfaceString {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Input value used for unconnected socket
+   * @desc string, default '', (never None)
+   */
+  public get default_value(): string {
+    return PythonInterop.getString(this.interop, `${this.accessor}.default_value`)
+  }
 
-    /**
-     * Input value used for unconnected socket
-     * @desc string, default '', (never None)
-     */
-    public get default_value(): string {
-        return PythonInterop.getString(this.interop, `${this.accessor}.default_value`)
-    }
+  /**
+   * Input value used for unconnected socket
+   * @desc string, default '', (never None)
+   */
+  public set default_value(value: string) {
+    PythonInterop.setString(this.interop, `${this.accessor}.default_value`, value)
+  }
 
-    /**
-     * Input value used for unconnected socket
-     * @desc string, default '', (never None)
-     */
-    public set default_value(value: string) {
-        PythonInterop.setString(this.interop, `${this.accessor}.default_value`, value)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

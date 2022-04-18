@@ -7,14 +7,13 @@ import { Paint } from './Paint'
 
 /**
  * UvSculpt
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.UvSculpt.html
  */
 export class UvSculpt {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

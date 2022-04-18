@@ -10,30 +10,29 @@ import { CurveMapping } from './CurveMapping'
 
 /**
  * CompositorNodeCurveRGB
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.CompositorNodeCurveRGB.html
  */
 export class CompositorNodeCurveRGB {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc CurveMapping, (readonly)
+   */
+  public get mapping(): CurveMapping {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.mapping`, CurveMapping)
+  }
 
-    /**
-     * 
-     * @desc CurveMapping, (readonly)
-     */
-    public get mapping(): CurveMapping {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.mapping`, CurveMapping)
-    }
+  /**
+   *
+   * @desc void
+   */
+  public update(): void {
+    return PythonInterop.callVoid(this.interop, `${this.accessor}.update`, {})
+  }
 
-    /**
-     * 
-     * @desc void
-     */
-    public update(): void {
-        return PythonInterop.callVoid(this.interop, `${this.accessor}.update`, {})
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

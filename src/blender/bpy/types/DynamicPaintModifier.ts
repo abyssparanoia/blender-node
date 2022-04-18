@@ -9,46 +9,45 @@ import { DynamicPaintCanvasSettings } from './DynamicPaintCanvasSettings'
 
 /**
  * DynamicPaintModifier
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.DynamicPaintModifier.html
  */
 export class DynamicPaintModifier {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc DynamicPaintBrushSettings, (readonly)
+   */
+  public get brush_settings(): DynamicPaintBrushSettings {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.brush_settings`, DynamicPaintBrushSettings)
+  }
 
-    /**
-     * 
-     * @desc DynamicPaintBrushSettings, (readonly)
-     */
-    public get brush_settings(): DynamicPaintBrushSettings {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.brush_settings`, DynamicPaintBrushSettings)
-    }
+  /**
+   *
+   * @desc DynamicPaintCanvasSettings, (readonly)
+   */
+  public get canvas_settings(): DynamicPaintCanvasSettings {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.canvas_settings`, DynamicPaintCanvasSettings)
+  }
 
-    /**
-     * 
-     * @desc DynamicPaintCanvasSettings, (readonly)
-     */
-    public get canvas_settings(): DynamicPaintCanvasSettings {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.canvas_settings`, DynamicPaintCanvasSettings)
-    }
+  /**
+   *
+   * @desc enum in ['CANVAS', 'BRUSH'], default 'CANVAS'
+   */
+  public get ui_type(): 'CANVAS' | 'BRUSH' {
+    return PythonInterop.getEnum(this.interop, `${this.accessor}.ui_type`)
+  }
 
-    /**
-     * 
-     * @desc enum in ['CANVAS', 'BRUSH'], default 'CANVAS'
-     */
-    public get ui_type(): 'CANVAS' | 'BRUSH' {
-        return PythonInterop.getEnum(this.interop, `${this.accessor}.ui_type`)
-    }
+  /**
+   *
+   * @desc enum in ['CANVAS', 'BRUSH'], default 'CANVAS'
+   */
+  public set ui_type(value: 'CANVAS' | 'BRUSH') {
+    PythonInterop.setEnum(this.interop, `${this.accessor}.ui_type`, value)
+  }
 
-    /**
-     * 
-     * @desc enum in ['CANVAS', 'BRUSH'], default 'CANVAS'
-     */
-    public set ui_type(value: 'CANVAS' | 'BRUSH') {
-        PythonInterop.setEnum(this.interop, `${this.accessor}.ui_type`, value)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

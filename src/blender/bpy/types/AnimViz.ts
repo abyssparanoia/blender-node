@@ -6,22 +6,21 @@ import { AnimVizMotionPaths } from './AnimVizMotionPaths'
 
 /**
  * AnimViz
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.AnimViz.html
  */
 export class AnimViz {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Motion Path settings for visualization
+   * @desc AnimVizMotionPaths, (readonly, never None)
+   */
+  public get motion_path(): AnimVizMotionPaths {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.motion_path`, AnimVizMotionPaths)
+  }
 
-    /**
-     * Motion Path settings for visualization
-     * @desc AnimVizMotionPaths, (readonly, never None)
-     */
-    public get motion_path(): AnimVizMotionPaths {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.motion_path`, AnimVizMotionPaths)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

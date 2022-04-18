@@ -9,30 +9,29 @@ import { SoftBodySettings } from './SoftBodySettings'
 
 /**
  * SoftBodyModifier
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.SoftBodyModifier.html
  */
 export class SoftBodyModifier {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc PointCache, (readonly, never None)
+   */
+  public get point_cache(): PointCache {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.point_cache`, PointCache)
+  }
 
-    /**
-     * 
-     * @desc PointCache, (readonly, never None)
-     */
-    public get point_cache(): PointCache {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.point_cache`, PointCache)
-    }
+  /**
+   *
+   * @desc SoftBodySettings, (readonly, never None)
+   */
+  public get settings(): SoftBodySettings {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.settings`, SoftBodySettings)
+  }
 
-    /**
-     * 
-     * @desc SoftBodySettings, (readonly, never None)
-     */
-    public get settings(): SoftBodySettings {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.settings`, SoftBodySettings)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

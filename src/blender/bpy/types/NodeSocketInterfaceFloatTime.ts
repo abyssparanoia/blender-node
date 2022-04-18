@@ -8,62 +8,61 @@ import { NodeSocketInterfaceStandard } from './NodeSocketInterfaceStandard'
 
 /**
  * NodeSocketInterfaceFloatTime
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.NodeSocketInterfaceFloatTime.html
  */
 export class NodeSocketInterfaceFloatTime {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Input value used for unconnected socket
+   * @desc float in [-inf, inf], default 0.0
+   */
+  public get default_value(): number {
+    return PythonInterop.getFloat(this.interop, `${this.accessor}.default_value`)
+  }
 
-    /**
-     * Input value used for unconnected socket
-     * @desc float in [-inf, inf], default 0.0
-     */
-    public get default_value(): number {
-        return PythonInterop.getFloat(this.interop, `${this.accessor}.default_value`)
-    }
+  /**
+   * Maximum value
+   * @desc float in [-inf, inf], default 0.0
+   */
+  public get max_value(): number {
+    return PythonInterop.getFloat(this.interop, `${this.accessor}.max_value`)
+  }
 
-    /**
-     * Maximum value
-     * @desc float in [-inf, inf], default 0.0
-     */
-    public get max_value(): number {
-        return PythonInterop.getFloat(this.interop, `${this.accessor}.max_value`)
-    }
+  /**
+   * Minimum value
+   * @desc float in [-inf, inf], default 0.0
+   */
+  public get min_value(): number {
+    return PythonInterop.getFloat(this.interop, `${this.accessor}.min_value`)
+  }
 
-    /**
-     * Minimum value
-     * @desc float in [-inf, inf], default 0.0
-     */
-    public get min_value(): number {
-        return PythonInterop.getFloat(this.interop, `${this.accessor}.min_value`)
-    }
+  /**
+   * Input value used for unconnected socket
+   * @desc float in [-inf, inf], default 0.0
+   */
+  public set default_value(value: number) {
+    PythonInterop.setFloat(this.interop, `${this.accessor}.default_value`, value)
+  }
 
-    /**
-     * Input value used for unconnected socket
-     * @desc float in [-inf, inf], default 0.0
-     */
-    public set default_value(value: number) {
-        PythonInterop.setFloat(this.interop, `${this.accessor}.default_value`, value)
-    }
+  /**
+   * Maximum value
+   * @desc float in [-inf, inf], default 0.0
+   */
+  public set max_value(value: number) {
+    PythonInterop.setFloat(this.interop, `${this.accessor}.max_value`, value)
+  }
 
-    /**
-     * Maximum value
-     * @desc float in [-inf, inf], default 0.0
-     */
-    public set max_value(value: number) {
-        PythonInterop.setFloat(this.interop, `${this.accessor}.max_value`, value)
-    }
+  /**
+   * Minimum value
+   * @desc float in [-inf, inf], default 0.0
+   */
+  public set min_value(value: number) {
+    PythonInterop.setFloat(this.interop, `${this.accessor}.min_value`, value)
+  }
 
-    /**
-     * Minimum value
-     * @desc float in [-inf, inf], default 0.0
-     */
-    public set min_value(value: number) {
-        PythonInterop.setFloat(this.interop, `${this.accessor}.min_value`, value)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

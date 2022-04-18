@@ -7,22 +7,21 @@ import { UIList } from './UIList'
 
 /**
  * MESH_UL_shape_keys
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.MESH_UL_shape_keys.html
  */
 export class MESH_UL_shape_keys {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc void
+   */
+  public draw_item(): void {
+    return PythonInterop.callVoid(this.interop, `${this.accessor}.draw_item`, {})
+  }
 
-    /**
-     * 
-     * @desc void
-     */
-    public draw_item(): void {
-        return PythonInterop.callVoid(this.interop, `${this.accessor}.draw_item`, {})
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

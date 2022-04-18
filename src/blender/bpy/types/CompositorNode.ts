@@ -8,30 +8,29 @@ import { NodeInternal } from './NodeInternal'
 
 /**
  * CompositorNode
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.CompositorNode.html
  */
 export class CompositorNode {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   * Tag the node for compositor update
+   * @desc void
+   */
+  public tag_need_exec(): void {
+    return PythonInterop.callVoid(this.interop, `${this.accessor}.tag_need_exec`, {})
+  }
 
-    /**
-     * Tag the node for compositor update
-     * @desc void
-     */
-    public tag_need_exec(): void {
-        return PythonInterop.callVoid(this.interop, `${this.accessor}.tag_need_exec`, {})
-    }
+  /**
+   *
+   * @desc void
+   */
+  public update(): void {
+    return PythonInterop.callVoid(this.interop, `${this.accessor}.update`, {})
+  }
 
-    /**
-     * 
-     * @desc void
-     */
-    public update(): void {
-        return PythonInterop.callVoid(this.interop, `${this.accessor}.update`, {})
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }

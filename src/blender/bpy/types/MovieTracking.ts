@@ -16,94 +16,110 @@ import { MovieTrackingTrack } from './MovieTrackingTrack'
 
 /**
  * MovieTracking
- * 
+ *
  * https://docs.blender.org/api/current/bpy.types.MovieTracking.html
  */
 export class MovieTracking {
+  constructor(public interop: BlenderInterop, public accessor: string) {}
 
-    constructor(public interop: BlenderInterop, public accessor: string) { }
+  /**
+   *
+   * @desc MovieTrackingCamera, (readonly)
+   */
+  public get camera(): MovieTrackingCamera {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.camera`, MovieTrackingCamera)
+  }
 
-    /**
-     * 
-     * @desc MovieTrackingCamera, (readonly)
-     */
-    public get camera(): MovieTrackingCamera {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.camera`, MovieTrackingCamera)
-    }
+  /**
+   *
+   * @desc MovieTrackingDopesheet, (readonly)
+   */
+  public get dopesheet(): MovieTrackingDopesheet {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.dopesheet`, MovieTrackingDopesheet)
+  }
 
-    /**
-     * 
-     * @desc MovieTrackingDopesheet, (readonly)
-     */
-    public get dopesheet(): MovieTrackingDopesheet {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.dopesheet`, MovieTrackingDopesheet)
-    }
+  /**
+   * Collection of objects in this tracking data object
+   * @desc MovieTrackingObjects bpy_prop_collection of MovieTrackingObject, (readonly)
+   */
+  public get objects(): BlenderCollection<MovieTrackingObject> & Indexable<MovieTrackingObject> & MovieTrackingObjects {
+    return BlenderCollection.createSpecialized(
+      this.interop,
+      `${this.accessor}.objects`,
+      MovieTrackingObjects,
+      MovieTrackingObject
+    )
+  }
 
-    /**
-     * Collection of objects in this tracking data object
-     * @desc MovieTrackingObjects bpy_prop_collection of MovieTrackingObject, (readonly)
-     */
-    public get objects(): BlenderCollection<MovieTrackingObject> & Indexable<MovieTrackingObject> & MovieTrackingObjects {
-        return BlenderCollection.createSpecialized(this.interop, `${this.accessor}.objects`, MovieTrackingObjects, MovieTrackingObject)
-    }
+  /**
+   * Collection of plane tracks in this tracking data object
+   * @desc MovieTrackingPlaneTracks bpy_prop_collection of MovieTrackingPlaneTrack, (readonly)
+   */
+  public get plane_tracks(): BlenderCollection<MovieTrackingPlaneTrack> &
+    Indexable<MovieTrackingPlaneTrack> &
+    MovieTrackingPlaneTracks {
+    return BlenderCollection.createSpecialized(
+      this.interop,
+      `${this.accessor}.plane_tracks`,
+      MovieTrackingPlaneTracks,
+      MovieTrackingPlaneTrack
+    )
+  }
 
-    /**
-     * Collection of plane tracks in this tracking data object
-     * @desc MovieTrackingPlaneTracks bpy_prop_collection of MovieTrackingPlaneTrack, (readonly)
-     */
-    public get plane_tracks(): BlenderCollection<MovieTrackingPlaneTrack> & Indexable<MovieTrackingPlaneTrack> & MovieTrackingPlaneTracks {
-        return BlenderCollection.createSpecialized(this.interop, `${this.accessor}.plane_tracks`, MovieTrackingPlaneTracks, MovieTrackingPlaneTrack)
-    }
+  /**
+   *
+   * @desc MovieTrackingReconstruction, (readonly)
+   */
+  public get reconstruction(): MovieTrackingReconstruction {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.reconstruction`, MovieTrackingReconstruction)
+  }
 
-    /**
-     * 
-     * @desc MovieTrackingReconstruction, (readonly)
-     */
-    public get reconstruction(): MovieTrackingReconstruction {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.reconstruction`, MovieTrackingReconstruction)
-    }
+  /**
+   *
+   * @desc MovieTrackingSettings, (readonly)
+   */
+  public get settings(): MovieTrackingSettings {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.settings`, MovieTrackingSettings)
+  }
 
-    /**
-     * 
-     * @desc MovieTrackingSettings, (readonly)
-     */
-    public get settings(): MovieTrackingSettings {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.settings`, MovieTrackingSettings)
-    }
+  /**
+   *
+   * @desc MovieTrackingStabilization, (readonly)
+   */
+  public get stabilization(): MovieTrackingStabilization {
+    return PythonInterop.getClass(this.interop, `${this.accessor}.stabilization`, MovieTrackingStabilization)
+  }
 
-    /**
-     * 
-     * @desc MovieTrackingStabilization, (readonly)
-     */
-    public get stabilization(): MovieTrackingStabilization {
-        return PythonInterop.getClass(this.interop, `${this.accessor}.stabilization`, MovieTrackingStabilization)
-    }
+  /**
+   * Collection of tracks in this tracking data object
+   * @desc MovieTrackingTracks bpy_prop_collection of MovieTrackingTrack, (readonly)
+   */
+  public get tracks(): BlenderCollection<MovieTrackingTrack> & Indexable<MovieTrackingTrack> & MovieTrackingTracks {
+    return BlenderCollection.createSpecialized(
+      this.interop,
+      `${this.accessor}.tracks`,
+      MovieTrackingTracks,
+      MovieTrackingTrack
+    )
+  }
 
-    /**
-     * Collection of tracks in this tracking data object
-     * @desc MovieTrackingTracks bpy_prop_collection of MovieTrackingTrack, (readonly)
-     */
-    public get tracks(): BlenderCollection<MovieTrackingTrack> & Indexable<MovieTrackingTrack> & MovieTrackingTracks {
-        return BlenderCollection.createSpecialized(this.interop, `${this.accessor}.tracks`, MovieTrackingTracks, MovieTrackingTrack)
-    }
+  /**
+   * Index of active object
+   * @desc int in [-inf, inf], default 0
+   */
+  public get active_object_index(): number {
+    return PythonInterop.getInteger(this.interop, `${this.accessor}.active_object_index`)
+  }
 
-    /**
-     * Index of active object
-     * @desc int in [-inf, inf], default 0
-     */
-    public get active_object_index(): number {
-        return PythonInterop.getInteger(this.interop, `${this.accessor}.active_object_index`)
-    }
+  /**
+   * Index of active object
+   * @desc int in [-inf, inf], default 0
+   */
+  public set active_object_index(value: number) {
+    PythonInterop.setInteger(this.interop, `${this.accessor}.active_object_index`, value)
+  }
 
-    /**
-     * Index of active object
-     * @desc int in [-inf, inf], default 0
-     */
-    public set active_object_index(value: number) {
-        PythonInterop.setInteger(this.interop, `${this.accessor}.active_object_index`, value)
-    }
-
-    [util.inspect.custom]() {
-        return this.accessor
-    }
+  [util.inspect.custom]() {
+    return this.accessor
+  }
 }
